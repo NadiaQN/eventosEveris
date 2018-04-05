@@ -2,6 +2,8 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { MeetupComponent } from './../meetup/meetup.component';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import { NavController, Platform, AlertController } from 'ionic-angular';
+
 
 @Component({
   selector: 'app-list-meetup',
@@ -14,7 +16,7 @@ export class ListMeetupComponent implements OnInit {
   datas : data[] = [];
   listmeetup = []
   
-  constructor(private firebase: AngularFireDatabase) { }
+  constructor(private firebase: AngularFireDatabase, public navCtrl: NavController) { }
 
   ngOnInit() {
     const x = this.firebase.list('Data');
@@ -27,6 +29,13 @@ export class ListMeetupComponent implements OnInit {
         console.log(y, 'aca lo hice');
       })
     })
+  }
+
+  onChangeId(id) {
+    this.navCtrl.push(MeetupComponent, {
+      'idEvento': id
+    });
+    console.log(id)
   }
 }   
 
